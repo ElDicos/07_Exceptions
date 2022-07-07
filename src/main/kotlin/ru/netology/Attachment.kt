@@ -17,31 +17,31 @@ fun getAttachment(attachment: Attachment): Attachment {
 
 data class PhotoAttachment(
     override val type: String = "photo",
-    val attachment: Photo,
+    val attachment: Photo = Photo(),
 ) : Attachment(type, attachment) {
 }
 
 data class VideoAttachment(
     override val type: String = "video",
-    val attachment: Video,
+    val attachment: Video = Video(),
 ) : Attachment(type, attachment) {
 }
 
 data class AudioAttachment(
     override val type: String = "audio",
-    val attachment: Audio,
+    val attachment: Audio = Audio(),
 ) : Attachment(type, attachment) {
 }
 
 data class DocAttachment(
     override val type: String = "doc",
-    val attachment: Doc,
+    val attachment: Doc = Doc(),
 ) : Attachment(type, attachment) {
 }
 
 data class LinkAttachment(
     override val type: String = "link",
-    val attachment: Link,
+    val attachment: Link = Link(),
 ) : Attachment(type, attachment) {
 }
 

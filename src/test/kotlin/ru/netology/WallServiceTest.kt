@@ -7,11 +7,16 @@ import org.junit.Before
 
 class WallServiceTest {
 
+    @Before
+    fun clearPosts() {
+        WallService.clearPostsForTest()
+    }
+
     @Test
     fun add_shouldIdNotEqualsZero() {
         var array = emptyArray<Attachment>()
         array.plus(PhotoAttachment("photo", Photo()))
-        val post = Post(postSource = 0, attachments = array, geo = 0, copyHistory = emptyArray())
+        val post = Post()
         val testPost = WallService.add(post)
         WallService.add(post)
 
@@ -23,9 +28,9 @@ class WallServiceTest {
     @Test
     fun update_shouldTrueCorrect() {
         var array = emptyArray<Attachment>()
-        array.plus(PhotoAttachment("photo", Photo()))
-        val post = Post(postSource = 0, attachments = array, geo = 0, copyHistory = emptyArray())
-        val postUpdate = Post(id = 1, postSource = 0, attachments = array, geo = 0, copyHistory = emptyArray())
+        array.plus(VideoAttachment("Video", Video()))
+        val post = Post()
+        val postUpdate = Post(id = 1)
 
         WallService.add(post)
         WallService.add(post)
@@ -42,8 +47,8 @@ class WallServiceTest {
     fun update_shouldFalseCorrect() {
         var array = emptyArray<Attachment>()
         array.plus(PhotoAttachment("photo", Photo()))
-        val post = Post(postSource = 0, attachments = array, geo = 0, copyHistory = emptyArray())
-        val postUpdate = Post(id = 100, postSource = 0, attachments = array, geo = 0, copyHistory = emptyArray())
+        val post = Post()
+        val postUpdate = Post(id = 100)
 
         WallService.add(post)
         WallService.add(post)
@@ -54,6 +59,24 @@ class WallServiceTest {
         val result = WallService.update(postUpdate)
 
         assertFalse(result)
+    }
+
+    @Test
+    fun findById_shouldTrueCorrect() {
+        WallService.add(Post())
+
+        val expectedResultTrue = WallService.findById(1)
+
+        assertTrue(expectedResultTrue)
+    }
+
+    @Test
+    fun findById_shouldFalseCorrect() {
+        WallService.add(Post())
+
+        val expectedResultTrue = WallService.findById(2)
+
+        assertFalse(expectedResultTrue)
     }
 }
 

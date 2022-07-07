@@ -1,7 +1,10 @@
 package ru.netology
 
+import ru.netology.exceptions.PostNotFoundException
+
 object WallService {
     private var posts = emptyArray<Post>()
+    private var comments = emptyArray<Comment>()
 
     fun add(post: Post): Post {
         var newId = 1
@@ -46,7 +49,7 @@ object WallService {
                     canPin = canPin,
                     canDelete = canDelete,
                     canEdit = canEdit,
-                    isPinned = singerId,
+                    isPinned = isPinned,
                     markedAsAds = markedAsAds,
                     isFavorite = isFavorite,
                     donut = donut,
@@ -55,5 +58,23 @@ object WallService {
                 return true
             }
         return false
+    }
+
+    fun createComment(postId: Int, comment: Comment): Comment {
+        if (findById(postId)) {
+            comments += comment
+            return comment
+        } else throw PostNotFoundException("Post with given id not found")
+    }
+
+    fun findById(postId: Int): Boolean {
+        for (searchedId in posts) {
+            if (searchedId.id == postId) return true
+        }
+        return false
+    }
+
+    fun clearPostsForTest() {
+        posts = emptyArray()
     }
 }
