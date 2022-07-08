@@ -4,6 +4,7 @@ import org.junit.Test
 
 import org.junit.Assert.*
 import org.junit.Before
+import ru.netology.exceptions.PostNotFoundException
 
 class WallServiceTest {
 
@@ -77,6 +78,22 @@ class WallServiceTest {
         val expectedResultTrue = WallService.findById(2)
 
         assertFalse(expectedResultTrue)
+    }
+
+
+    @Test
+    fun createComment_shouldAddCorrect(){
+        WallService.add(Post())
+        val expectedRes = Comment()
+
+        val res = WallService.createComment(1, expectedRes)
+
+        assertEquals(expectedRes, res)
+    }
+
+    @Test(expected = PostNotFoundException::class)
+    fun createComment_shouldThrow() {
+        WallService.createComment(1, Comment())
     }
 }
 
